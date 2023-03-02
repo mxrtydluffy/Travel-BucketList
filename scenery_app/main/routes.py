@@ -16,15 +16,15 @@ def homepage():
     return render_template('home.html',
         all_locations=all_locations, all_users=all_users)
 
-@main.route('/create_lcoation', methods=['GET', 'POST'])
+@main.route('/create_location', methods=['GET', 'POST'])
 @login_required
-def create_lcoation():
+def create_location():
     form = LocationForm()
 
     if form.validate_on_submit(): 
         new_location = Location(
             title=form.title.data,
-            visit_date=form.visit_date.data,
+            visited_date=form.visited_date.data,
             list=form.list.data,
             landscape=form.landscape.data,
             entries=form.entries.data
@@ -32,8 +32,8 @@ def create_lcoation():
         db.session.add(new_location)
         db.session.commit()
 
-        flash('New film was created successfully.')
-        return redirect(url_for('main.film_detail', location_id=new_location.id))
+        flash('New location was created successfully.')
+        return redirect(url_for('main.location_detail', location_id=new_location.id))
     return render_template('create_location.html', form=form)
 
 @main.route('/create_list', methods=['GET', 'POST'])
@@ -70,7 +70,7 @@ def create_entry():
     return render_template('create_entry.html', form=form)
 
 @main.route('/location/<location_id>', methods=['GET', 'POST'])
-def film_detail(location_id):
+def location_detail(location_id):
     location = Location.query.get(location_id)
     form = LocationForm(obj=location)
     
@@ -78,24 +78,24 @@ def film_detail(location_id):
         location.title = form.title.data
         location.visited_date = form.visited_date.data
         location.list = form.list.data
-        location.genre = form.landscape.data
+        location.landscape = form.landscape.data
         location.entries = form.entries.data
 
         db.session.commit()
 
-        flash('Film was updated successfully.')
-        return redirect(url_for('main.location_detail', location_id=location.id))
+        flash('Location was updated successfully.')
+        return redirect(url_for('main.location_detail', location_id=location_id))
 
-    return render_template('film_detail.html', location=location, form=form)
+    return render_template('location_detail.html', location=location, form=form)
 
 @main.route('/profile/<username>')
 def profile(username):
     user = User.query.filter_by(username=username).one()
     return render_template('profile.html', user=user)
 
-@main.route('/favorite/<film_id>', methods=['POST'])
+@main.route('/favorite/<location_id>', methods=['POST'])
 @login_required
-def favorite_film(location_id):
+def favorite_location(location_id):
     location = Location.query.get(location_id)
     if location in current_user.favorite_locations:
         flash('Location already in favorites.')
@@ -106,7 +106,7 @@ def favorite_film(location_id):
         flash('Location added to favorites.')
     return redirect(url_for('main.location_detail', location_id=location_id))
 
-@main.route('/unfavorite/<film_id>', methods=['POST'])
+@main.route('/unfavorite/<location_id>', methods=['POST'])
 @login_required
 def unfavorite_location(location_id):
     location = Location.query.get(location_id)
@@ -119,28 +119,28 @@ def unfavorite_location(location_id):
         flash('Location removed from favorites.')
     return redirect(url_for('main.location_detail', location_id=location_id))
 
-@main.route('/visitedlist/<location_id>', methods=['POST'])
+@main.route('/visitlist/<location_id>', methods=['POST'])
 @login_required
-def visited_location(location_id):
+def visit_location(location_id):
     location = Location.query.get(location_id)
-    if location in current_user.visitedlist_films:
-        flash('Film already in watchlist.')
+    if location in current_user.visitlist_locations:
+        flash('Location already in visitlist.')
     else:
-        current_user.watchlist_films.append(location)
+        current_user.visitlist_locations.append(location)
         db.session.add(current_user)
         db.session.commit()
-        flash('Location added to watchlist.')
-    return redirect(url_for('main.film_detail', film_id=location_id))
+        flash('Location added to visitlist.')
+    return redirect(url_for('main.location_detail', location_id=location_id))
 
-@main.route('/unvisitedlist/<location_id>', methods=['POST'])
+@main.route('/unvisitlist/<location_id>', methods=['POST'])
 @login_required
-def unvisitedlist_location(location_id):
+def unvisitlist_location(location_id):
     location = Location.query.get(location_id)
-    if location not in current_user.visitedlist_locations:
-        flash('Location not in vistedlist')
+    if location not in current_user.visitlist_locations:
+        flash('Location not in visitlist')
     else:
-        current_user.watchlist_films.remove(location)
+        current_user.visitlist_locations.remove(location)
         db.session.add(current_user)
         db.session.commit()
-        flash('Location removed from visitedlist.')
-    return redirect(url_for('main.location_detail', film_id=location_id))
+        flash('Location removed from visitlist.')
+    return redirect(url_for('main.location_detail', location_id=location_id))

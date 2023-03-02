@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ location.title }}</h1>
+
+{% if current_user.is_authenticated %}
+    {% if location not in current_user.favorite_locations %}
+    <form action="/favorite/{{ location.id }}" method="POST">
+        <input type="submit" value="Favorite This Location">
+    </form>
+    {% else %}
+    <form action="/unfavorite/{{ location.id }}" method="POST">
+        <input type="submit" value="Unfavorite This Location">
+    </form>
+    {% endif %}
+{% endif %}
+
+<p>
+    <strong>List</strong>: {{ location.list.name }}
+</p>
+
+<p>
+    <strong>List Description</strong>: {{ location.list.description }}
+</p>
+
+{% if location.visited_date %}
+<p>
+    <strong>Release date</strong>: {{ location.visited_date.strftime('%B %d, %Y') }}
+</p>
+{% endif %}
+
+<p>
+    <strong>Landscape</strong>: {{ location.landscape }}
+</p>
+
+<p>
+    <strong>Entries</strong>: 
+    
+    {% for entry in location.entries %}
+    {{ entry.name }},
+    {% endfor %}
+</p>
+
+<form method="POST" action="{{ url_for('main.location_detail', location_id=location.id) }}">
+    {{ form.csrf_token }}
+    <fieldset>
+        <legend>Edit this Location</legend>
+
+        {{ form.title.label }}
+        {{ form.title }}
+        
+        {{ form.visited_date.label }}
+        {{ form.visited_date(placeholder="YYYY-mm-dd") }}
+        
+        {{ form.list.label }}
+        {{ form.list }}
+        
+        {{ form.landscape.label }}
+        {{ form.landscape }}
+        
+        {{ form.entries.label }}
+        {{ form.entries }}
+            
+        {{ form.submit }}
+    </fieldset>
+</form>
+
+{% endblock %}

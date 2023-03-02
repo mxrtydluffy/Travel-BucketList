@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>Create List form.</p>
+
+<form method="POST" action="{{ url_for('main.create_list') }}">
+    {{ form.csrf_token }}
+    <fieldset>
+        <legend>Enter a List</legend>
+
+        {{ form.name.label }}
+        {{ form.name }}
+        <ul>
+        {% for error in form.name.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+
+        {{ form.description.label }}
+        {{ form.description }}
+        <ul>
+        {% for error in form.description.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+            
+        {{ form.submit }}
+    </fieldset>
+</form>
+
+
+{% endblock %}

@@ -13,7 +13,7 @@ class LocationForm(FlaskForm):
     """
     title = StringField('Location Title',
         validators=[DataRequired(), Length(min=3, max=80)])
-    visit_date = DateField('Location Visited or when will visit:')
+    visited_date = DateField('Location Visited or When Will Visit:')
     list = QuerySelectField('List',
         query_factory=lambda: List.query, allow_blank=False)
     landscape = SelectField('Landscape', choices=Landscape.choices())

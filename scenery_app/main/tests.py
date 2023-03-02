@@ -10,7 +10,7 @@ from scenery_app.models import Location, Country, User, Landscape, Entry
 
 """
 Run these tests with the command:
-python -m unittest location_app.main.tests
+python -m unittest scenery_app.main.tests
 """
 
 #################################################
@@ -173,7 +173,7 @@ class MainTests(unittest.TestCase):
         location = Location.query.get(1)
         self.assertEqual(location.title, 'Victoria Falls')
         self.assertEqual(location.visited_date, date(2018, 11, 7))
-        self.assertEqual(location.Landscape, Landscape.WATERFALL)
+        self.assertEqual(location.landscape, Landscape.WATERFALL)
 
     def test_create_location(self):
         """Test creating a location."""
@@ -184,16 +184,16 @@ class MainTests(unittest.TestCase):
 
         # Make POST request with data
         post_data = {
-            'title': 'Frances Ha',
-            'visited_date': '2013-05-17',
-            'Country': 1,
-            'Landscape': 'ROMANCE',
+            'title': 'Niagara Falls',
+            'visited_date': '2012-08-07',
+            'Country': 'USA',
+            'Landscape': 'WATERFALL',
             'Landscapes': []
         }
         self.app.post('/create_location', data=post_data)
 
         # Make sure location was updated as we'd expect
-        created_location = Location.query.filter_by(title='Frances Ha').one()
+        created_location = Location.query.filter_by(title='Niagara Falls').one()
         self.assertIsNotNone(created_location)
         self.assertEqual(created_location.list.name, 'Chile')
 
@@ -227,9 +227,9 @@ class MainTests(unittest.TestCase):
 
         self.app.post('/create_Country', data=post_data)
         # TODO: Verify that the Country was updated in the database
-        create_Country = Country.query.filter_by(name='Avenue of the Baobabs').one()
-        self.assertIsNotNone(create_Country)
-        self.assertEqual(create_Country.region, 'Madagascar')
+        create_country = Country.query.filter_by(name='Avenue of the Baobabs').one()
+        self.assertIsNotNone(create_country)
+        self.assertEqual(create_country.region, 'Madagascar')
 
     def test_create_entry(self):
         # TODO: Create a user & login (so that the user can access the route)
