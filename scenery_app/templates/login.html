@@ -5,9 +5,8 @@
 
 <form action="/login" method="POST">
     {{ form.csrf_token }}
+    <legend>Enter your credentials</legend>
     <fieldset>
-        <legend>Enter your credentials</legend>
-
         {{ form.username.label }}
         {{ form.username }}
         <ul>
@@ -27,5 +26,32 @@
         {{ form.submit }}
     </fieldset>
 </form>
+
+<!-- <form action="/login" method="POST">
+    {{ form.csrf_token }}
+    <legend>Enter your credentials</legend>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">User Name</label>
+      {{ form.username }}
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">Make sure it easy to remember!</div>
+      <ul>
+        {% for error in form.username.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      {{ form.password }}
+      <input type="password" class="form-control" id="exampleInputPassword1">
+      <ul>
+        {% for error in form.password.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <button type="submit" class="btn btn-primary">{{ form.submit }}</button>
+</form> -->
 
 {% endblock %}

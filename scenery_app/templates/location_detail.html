@@ -26,7 +26,7 @@
 
 {% if location.visited_date %}
 <p>
-    <strong>Release date</strong>: {{ location.visited_date.strftime('%B %d, %Y') }}
+    <strong>Visited date</strong>: {{ location.visited_date.strftime('%B %d, %Y') }}
 </p>
 {% endif %}
 
@@ -47,23 +47,36 @@
     <fieldset>
         <legend>Edit this Location</legend>
 
-        {{ form.title.label }}
-        {{ form.title }}
+        <div>
+            {{ form.title.label }}
+            {{ form.title }}
+        </div>
+
+        <div>
+            {{ form.visited_date.label }}
+            {{ form.visited_date(placeholder="YYYY-mm-dd") }}
+        </div>
         
-        {{ form.visited_date.label }}
-        {{ form.visited_date(placeholder="YYYY-mm-dd") }}
         
-        {{ form.list.label }}
-        {{ form.list }}
+        <div>
+            {{ form.list.label }}
+            {{ form.list }}
+        </div>
+
+        <div>
+            {{ form.landscape.label }}
+            {{ form.landscape }}
+        </div>
         
-        {{ form.landscape.label }}
-        {{ form.landscape }}
+        <div>
+            {{ form.entries.label }}
+            {{ form.entries }}
+        </div>
         
-        {{ form.entries.label }}
-        {{ form.entries }}
-            
-        {{ form.submit }}
     </fieldset>
+
+    {{ form.submit }}
+
 </form>
 
 {% endblock %}

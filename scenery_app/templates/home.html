@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <div class="justify-content-center">
-        
-    </div>
-
-
     <div class="d-flex justify-content-center">
         <h1 class="title">Travel Bucketlist</h1>
     </div>
@@ -14,32 +9,28 @@
         <h3 class="text-center">Unsure Where to Head Next? Here are some suggestions!</h3>
     </div>
 
-    <div class="container">
-        <ol class="list-group list-group-numbered">
-            <li class="list-group-item" href="https://www.visitcentroamerica.com/en/visitar/lake-atitlan-and-sorrounding-towns/">LAKE ATITLÁN</li>
-            <li class="list-group-item" href="https://earthlymission.com/underwater-waterfall-mauritius-le-morne-brabant/">Le Morne Brabant, Mauritius</li>
-            <li class="list-group-item" href="https://www.okavango.com">Okavango Delta</li>
-        </ol>
-    </div>
-
-    
-
-    <div class="container-lg pt-5">
-        <div>
-            <h2>Locations Logged:</h2>
-            <ul>
-                {% for location in all_locations %}
-                    <li><a href="/location/{{ location.id }}">{{ location.title }}</a></li>
-                {% endfor %}
-            </ul>
-            <h2>Users:</h2>
+        <div class="list-group">
+            <a href="https://www.saltinourhair.com/vietnam/ha-long-bay/" class="list-group-item list-group-item-action active" aria-current="true">
+            MOST RECOMMENDED!!!
+            </a>
+            <a href="https://www.visitcentroamerica.com/en/visitar/lake-atitlan-and-sorrounding-towns/" class="list-group-item list-group-item-action">LAKE ATITLÁN</a>
+            <a href="https://earthlymission.com/underwater-waterfall-mauritius-le-morne-brabant/" class="list-group-item list-group-item-action">Le Morne Brabant, Mauritius</a>
+            <a href="https://www.okavango.com" class="list-group-item list-group-item-action">Okavango Delta</a>
         </div>
 
-        <ul>
-            {% for user in all_users %}
-                <li><a href="/profile/{{ user.username }}">{{ user.username }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
 
+        <div class="container-lg pt-5">
+            <div>
+                <h2>Locations Logged:</h2>
+                <ul>
+                    {% for location in all_locations %}
+                        <li><a href="/location/{{ location.id }}">{{ location.title }}</a></li>
+                    {% endfor %}
+                </ul>
+                <h2>Users:</h2>
+                {% for user in all_users %}
+                    <a href="/profile/{{ user.username }}">{{ user.username }}</a>
+                {% endfor %}
+            </div>
+        </div>
 {% endblock %}
