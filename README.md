@@ -1,3 +1,3 @@
-# My Project
+# Travel Bucketlist Project
 
-Add project description here.
+Keep track of all of the locations you have visited!
